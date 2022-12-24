@@ -36,3 +36,61 @@ class User(AbstractUser):
         null=True
     )
 
+
+class Lesson(models.Model):
+    MATH = 'MATH'
+    PHYS = 'PHYS'
+    ALG = 'ALG'
+    DRG = 'DRG'
+    CHM = 'CHM'
+    HSTR = 'HSTR'
+    MSC = 'MSC'
+    BIO = 'BIO'
+    LESSON_TYPE_CHOICES = [
+        (MATH, 'Математика'),
+        (PHYS, 'Физика'),
+        (ALG, 'Алгебра'),
+        (DRG, 'Рисование'),
+        (CHM, 'Химия'),
+        (HSTR, 'История'),
+        (MSC, 'Музыка'),
+        (BIO, 'Биология'),
+    ]
+
+    LESSON1 = 'LESSON1'
+    LESSON2 = 'LESSON2'
+    LESSON3 = 'LESSON3'
+    LESSON4 = 'LESSON4'
+    LESSON5 = 'LESSON5'
+    LESSON6 = 'LESSON6'
+    LESSON_ORDER_CHOICES = [
+        (LESSON1, 'Первый урок'),
+        (LESSON2, 'Второй урок'),
+        (LESSON3, 'Третий урок'),
+        (LESSON4, 'Червертый урок'),
+        (LESSON5, 'Пятый урок'),
+        (LESSON6, 'Шестой урок'),
+    ]
+
+    name = models.CharField(
+            verbose_name="Предмет",
+            max_length=4,
+            choices=LESSON_TYPE_CHOICES,
+            default=MATH,
+    )
+    lesson_order = models.CharField(
+        verbose_name="Порядковый номер урока",
+        max_length=7,
+        choices=LESSON_ORDER_CHOICES,
+        default=LESSON1,
+    )
+    date = models.DateField()
+    lesson = models.ManyToManyField(User, through="Mark")
+
+
+class Mark(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+
+
