@@ -36,6 +36,12 @@ class User(AbstractUser):
         null=True
     )
 
+    def __str__(self):
+        return "%s" % self.fullname
+
+    def __unicode__(self):
+        return "%s" % self.fullname
+
 
 class Lesson(models.Model):
     MATH = 'MATH'
@@ -85,12 +91,24 @@ class Lesson(models.Model):
         default=LESSON1,
     )
     date = models.DateField()
-    lesson = models.ManyToManyField(User, through="Mark")
+    lesson = models.ManyToManyField(User, through="Mark", )
+
+    def __str__(self):
+        return "%s %s %s" % (self.name, self.lesson_order, self.date)
+
+    def __unicode__(self):
+        return "%s %s %s" % (self.name, self.lesson_order, self.date)
 
 
 class Mark(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "%s %s %s %s %s" % (self.student, self.lesson.name, self.lesson.lesson_order, self.lesson.date, self.date)
+
+    def __unicode__(self):
+        return "%s %s %s %s %s" % (self.student, self.lesson.name, self.lesson.lesson_order, self.lesson.date, self.date)
 
 

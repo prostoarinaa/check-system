@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+    <ul>
+        {% for m in marks %}
+        <li>
+            {{ m }}
+        </li>
+        {% endfor %}
+    </ul>>
+
+
+{% endblock %}

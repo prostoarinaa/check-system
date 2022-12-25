@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Add a mark{% endblock %}
+
+{% block content %}
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        <h2>Add Mark</h2>
+        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        </div>
+            Hi {{ user.fullname }}!
+        {{ form.as_p }}
+        </div>
+        <input type="submit" value="Add mark" />
+    </form>
+
+
+  <script>
+    $(function () {
+      $("#datetimepicker1").datetimepicker({
+        format: 'YYYY-MM-DD hh:mm:ss',
+      });
+    });
+  </script>
+
+    <a href="{% url 'check:home' %}">To home</a>
+
+{% endblock content%}
+
+
+
+
