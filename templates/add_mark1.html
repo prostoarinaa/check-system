@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        <h2>Добавление отметки о посещении</h2>
+
+        Чтобы отметить студента, выберете студента и занятие (отображены только сегодняшние пары):
+        {{ form.as_p }}
+
+        <input type="submit" value="Отметить" />
+    </form>
+
+<button type="button">
+    <a href="{% url 'check:home' %}">Вернуться домой</a>
+</button>
+
+{% endblock content%}
+
+
+
+

@@ -37,6 +37,15 @@ class AddMarkForm(forms.ModelForm):
         # self.fields['lesson'] = forms.ChoiceField(choices=((x.pk, x) for x in lessons))
 
 
+class AddMarkForm1(forms.ModelForm):
+    class Meta:
+        model = Mark
+        exclude = ('date',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['lesson'].queryset = Lesson.objects.filter(date=date.today())
+
 
 
 

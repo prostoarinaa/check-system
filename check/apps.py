@@ -6,6 +6,7 @@ def startup():
     from django.contrib.contenttypes.models import ContentType
     from .models import Lesson, Mark
 
+
     teachers, created = Group.objects.get_or_create(name='teachers_group')
     students, created = Group.objects.get_or_create(name='students_group')
 
@@ -23,13 +24,15 @@ def startup():
     can_view_mark = Permission.objects.get(codename='view_mark',
                                            name='Can view mark',
                                            content_type=ct_m)
+    can_add_st_mark, created = Permission.objects.get_or_create(codename='add_st_mark',
+                                           name='Can add_st_mark',
+                                           content_type=ct_m)
 
     if can_add_lesson not in Permission.objects.filter(group=teachers):
         teachers.permissions.add(can_add_lesson)
     if can_add_mark not in Permission.objects.filter(group=students):
         students.permissions.add(can_add_mark)
-    if can_view_mark not in Permission.objects.filter(group=teachers):
-        students.permissions.add(can_view_mark)
+
 
     for p in Permission.objects.filter(group=teachers):
         print(p.codename)

@@ -8,7 +8,7 @@ from datetime import date
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group
 
-from .forms import LoginForm, UserRegistrationForm, AddLessonForm, AddMarkForm
+from .forms import LoginForm, UserRegistrationForm, AddLessonForm, AddMarkForm, AddMarkForm1
 
 
 class UserLoginView(LoginView):
@@ -78,7 +78,24 @@ def add_mark(request):
         else:
             print("form not valid")
 
-    return render(request, 'add_mark.html', {'form': form})
+
+def add_mark1(request):
+    form = AddMarkForm1()
+    if request.method == 'GET':
+        # student = request.user.username
+        return render(request, 'add_mark1.html', {'form': form})
+    if request.method == 'POST':
+        form = AddMarkForm1(request.POST)
+        if form.is_valid():
+            print(form.fields)
+            mark = form.save(commit=False)
+            mark.save()
+            # lessons = Lesson.objects.filter(date=date.today())
+            return redirect('check:home')
+        else:
+            print("form not valid")
+
+    return render(request, 'add_mark1.html', {'form': form})
     # if request.method == 'POST':
     #     form = AddMarkForm(request.POST)
     #     if form.is_valid():

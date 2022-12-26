@@ -11,5 +11,6 @@ urlpatterns = [
 
     path(r'add_lesson/', views.add_lesson, name='add_lesson'),
     path(r'add_mark/', views.add_mark, name='add_mark'),
+    path(r'add_mark1/', views.add_mark1, name='add_mark1'),
     path(r'show_marks/', views.show_marks, name='show_marks'),
 ]
