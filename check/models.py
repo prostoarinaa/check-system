@@ -19,8 +19,20 @@ class User(AbstractUser):
         unique=True,
         validators=[validate_slug]
     )
-    fullname = models.CharField(
-        verbose_name="ФИО",
+    last_name = models.CharField(
+        verbose_name="Фамилия",
+        blank=False,
+        null=False,
+        max_length=150,
+    )
+    first_name = models.CharField(
+        verbose_name="Имя",
+        blank=False,
+        null=False,
+        max_length=150,
+    )
+    middle_name = models.CharField(
+        verbose_name="Отчество",
         blank=False,
         null=False,
         max_length=150,
@@ -35,58 +47,66 @@ class User(AbstractUser):
         blank=True,
         null=True
     )
+    isStudent = models.BooleanField(
+        verbose_name='Является студентом',
+        default=True
+    )
 
     def __str__(self):
-        return "%s" % self.fullname
+        return "%s %s %s" % (self.last_name, self.first_name, self.middle_name)
 
     def __unicode__(self):
-        return "%s" % self.fullname
+        return "%s %s %s" % (self.last_name, self.first_name, self.middle_name)
 
 
 class Lesson(models.Model):
-    MATH = 'MATH'
-    PHYS = 'PHYS'
-    ALG = 'ALG'
-    DRG = 'DRG'
-    CHM = 'CHM'
-    HSTR = 'HSTR'
-    MSC = 'MSC'
-    BIO = 'BIO'
+    L1 = 'Программирование'
+    L2 = 'Иностранный язык'
+    L3 = 'Математический анализ'
+    L4 = 'ЭВМ и периферийные устройства'
+    L5 = 'Сетевые технологии'
+    L6 = 'Вычислительная математика '
+    L7 = 'Базы данных'
+    L8 = 'Защита информации'
     LESSON_TYPE_CHOICES = [
-        (MATH, 'Математика'),
-        (PHYS, 'Физика'),
-        (ALG, 'Алгебра'),
-        (DRG, 'Рисование'),
-        (CHM, 'Химия'),
-        (HSTR, 'История'),
-        (MSC, 'Музыка'),
-        (BIO, 'Биология'),
+        (L1, 'Программирование'),
+        (L2, 'Иностранный язык'),
+        (L3, 'Математический анализ'),
+        (L4, 'ЭВМ и периферийные устройства'),
+        (L5, 'Сетевые технологии'),
+        (L6, 'Вычислительная математика '),
+        (L7, 'Базы данных'),
+        (L8, 'Защита информации'),
     ]
 
-    LESSON1 = 'LESSON1'
-    LESSON2 = 'LESSON2'
-    LESSON3 = 'LESSON3'
-    LESSON4 = 'LESSON4'
-    LESSON5 = 'LESSON5'
-    LESSON6 = 'LESSON6'
+    LESSON1 = 'Первая пара'
+    LESSON2 = 'Вторая пара'
+    LESSON3 = 'Тетья пара'
+    LESSON4 = 'Четвертая пара'
+    LESSON5 = 'Пятая пара'
+    LESSON6 = 'Шестая пара'
+    LESSON7 = 'Седьмая пара'
+    LESSON8 = 'Воосьмая пара'
     LESSON_ORDER_CHOICES = [
-        (LESSON1, 'Первый урок'),
-        (LESSON2, 'Второй урок'),
-        (LESSON3, 'Третий урок'),
-        (LESSON4, 'Червертый урок'),
-        (LESSON5, 'Пятый урок'),
-        (LESSON6, 'Шестой урок'),
+        (LESSON1, 'Первая пара'),
+        (LESSON2, 'Вторая пара'),
+        (LESSON3, 'Тетья пара'),
+        (LESSON4, 'Четвертая пара'),
+        (LESSON5, 'Пятая пара'),
+        (LESSON6, 'Шестая пара'),
+        (LESSON7, 'Седьмая пара'),
+        (LESSON8, 'Воосьмая пара'),
     ]
 
     name = models.CharField(
             verbose_name="Предмет",
-            max_length=4,
+            max_length=30,
             choices=LESSON_TYPE_CHOICES,
-            default=MATH,
+            default=L1,
     )
     lesson_order = models.CharField(
-        verbose_name="Порядковый номер урока",
-        max_length=7,
+        verbose_name="Номер пары",
+        max_length=15,
         choices=LESSON_ORDER_CHOICES,
         default=LESSON1,
     )

@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
-
 {% block content %}
 {% if user.is_authenticated %}
-  Hi {{ user.username }}!
-    <p><a href="{% url 'check:logout' %}">Log Out</a></p>
-    <p><a href="{% url 'check:add_lesson' %}">add_lesson</a></p>
-    <p><a href="{% url 'check:add_mark' %}">add_mark</a></p>
-    <p><a href="{% url 'check:show_marks' %}">show_marks</a></p>
+  Вы авторизованы как {{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}.
+    <p><a href="{% url 'check:logout' %}">Выйти из системы</a></p>
+    {% if perms.check.add_lesson %}
+        <p><a href="{% url 'check:add_lesson' %}">Добавить занятие</a></p>
+    {% endif %}
+        <p><a href="{% url 'check:add_mark' %}">Отметиться</a></p>
+    {% if perms.check.view_mark %}
+        <p><a href="{% url 'check:show_marks' %}">Посмотреть все отметки</a></p>
+    {% endif %}
 {% else %}
   <p>You are not logged in</p>
-    <a href="{% url 'check:login' %}">Log In</a>
-    <a href="{% url 'check:register' %}">Register</a>
+    <a href="{% url 'check:login' %}">Войти</a>
+    <a href="{% url 'check:register' %}">Зарегестрироваться</a>
 {% endif %}
 {% endblock %}

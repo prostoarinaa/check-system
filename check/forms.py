@@ -11,7 +11,7 @@ class LoginForm(AuthenticationForm):
 class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'fullname', 'password1']
+        fields = ['username', 'last_name', 'first_name', 'middle_name', 'password1', 'isStudent']
 
 
 class AddLessonForm(forms.ModelForm):
@@ -26,10 +26,12 @@ class AddLessonForm(forms.ModelForm):
 class AddMarkForm(forms.ModelForm):
     class Meta:
         model = Mark
-        fields = ['lesson']
+        exclude = ('student', 'date',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['lesson'].queryset = Lesson.objects.filter(date=date.today())
+
         # Make the query here
         # lessons = Lesson.objects.filter(date=date.today())
         # self.fields['lesson'] = forms.ChoiceField(choices=((x.pk, x) for x in lessons))
